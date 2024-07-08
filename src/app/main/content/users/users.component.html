@@ -1,0 +1,37 @@
+<!-- users.component.html -->
+<div class="user-container">
+    <div class="user-list">
+        @for (letter of getAlphabet(); track letter) {
+        <div>
+            @if (groupedUsers[letter]) {
+            <div>
+                <h2>{{ letter }}</h2>
+                <ul>
+                    @for (user of groupedUsers[letter]; track user) {
+                    <li (click)="selectUser(user)" [ngClass]="{'active': isSelected(user)}">
+                        <div class="user-border"> {{ getInitials(user) }}</div>
+                        {{ user.first_name }} {{ user.last_name }}
+                    </li>
+                    }
+                </ul>
+            </div>
+            }
+        </div>
+        }
+    </div>
+
+    <div class="user-details">
+        <div class="details-headline">
+        </div>
+        @if (selectedUser) {
+        <div class="name-details">
+            <div class="user-border-big"> {{ getInitials(selectedUser) }}</div>
+            <span>{{ selectedUser.first_name }} {{ selectedUser.last_name }}</span>
+        </div>
+        <p><b>Username:</b></p>
+        <p>{{ selectedUser.username }}</p>
+        <p><b>Email:</b></p>
+        <a [href]="'mailto:' + selectedUser.email">{{ selectedUser.email }}</a>
+        }
+    </div>
+</div>

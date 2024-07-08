@@ -1,0 +1,82 @@
+<div class="summary">
+    <div class="headline">
+        <h1>Summary</h1>
+        
+    </div>
+    <div class="container">
+
+
+        <div class="overview">
+            <div class="first-row">
+                <div (click)="navigateToBoard()" class="box box-size-first-row">
+                    <div class="image-circle">
+                        <div>
+                            <img src="../../../../assets/img/summary_pen.svg" alt="">
+                        </div>
+                    </div>
+
+                    <div class="column">
+                        <span class="ammount">{{ toDoCount }}</span>
+                        <span>To-do</span>
+                    </div>
+                </div>
+
+                <div (click)="navigateToBoard()" class="box box-size-first-row">
+                    <div class="image-circle">
+                        <div>
+                            <img src="../../../../assets/img/summary_hook.svg" alt="">
+                        </div>
+                    </div>
+                    <div class="column">
+                        <span class="ammount">{{ doneCount }}</span>
+                        <span>Done</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="second-row ">
+                <div (click)="navigateToBoard()" class="box box-size-second-row">
+                    <img src="../../../../assets/img/summary_urgent.svg" alt="">
+                    <div class="column">
+                        <span class="ammount">{{ urgentCount }}</span>
+                        <span>Urgent</span>
+                    </div>
+                    <div class="border-urgent"></div>
+                    <div class="upcoming-urgent">
+                        @if (nextUrgentTaskDueDate != '') {
+                        <span>{{ nextUrgentTaskDueDate }}</span>
+                        }@else{
+                        <span>no urgency</span>
+                        }
+                        <span>Upcoming Deadline</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="third-row">
+                <div (click)="navigateToBoard()" class="box box-size-third-row">
+                    <div class="column">
+                        <span class="ammount">{{ tasksCount }}</span>
+                        <span>Tasks in <br>Board</span>
+                    </div>
+                </div>
+                <div (click)="navigateToBoard()" class="box box-size-third-row">
+                    <div class="column">
+                        <span class="ammount">{{ inProgressCount }}</span>
+                        <span>Tasks in <br>Progress</span>
+                    </div>
+                </div>
+                <div (click)="navigateToBoard()" class="box box-size-third-row">
+                    <div class="column">
+                        <span class="ammount">{{ awaitFeedbackCount }}</span>
+                        <span>Awaiting<br>Feedback</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="greeting">
+            <span> {{greeting}},</span>
+            <span>{{ currentUser?.first_name}} {{ currentUser?.last_name}}</span>
+        </div>
+    </div>
+</div>

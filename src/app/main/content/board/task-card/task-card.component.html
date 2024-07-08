@@ -1,0 +1,20 @@
+<div class="card" [ngClass]="{'loading': loading}" (click)="openDialog()">
+    <div class="category" [ngStyle]="{'background-color': task.category.color}">{{ task.category.category }}</div>
+    <div class="title">{{ task.title }}</div>
+    <span class="description">{{ task.description }}</span>
+    <div class="subtask-container">
+        @if (task.subtasks.length > 0) { <div class="line-subtask">
+            <div class="progress-line" [ngStyle]="{'width': getProgressWidth() + '%'}"></div>
+        </div>
+        <div class="subtask-text">{{ getCompletedSubtasks() }}/{{ task.subtasks.length }} Subtasks</div>
+        }
+    </div>
+    <div class="footer">
+        <div class="users">
+            @for (user of task.users.slice(0,3); track user) {
+            <div class="user-border"> {{ getInitials(user)}}</div>
+            }
+        </div>
+        <img [src]="getPathPrio(task.priority)" alt="">
+    </div>
+</div>
