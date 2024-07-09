@@ -7,7 +7,6 @@ import { environment } from '../../environments/environment.development';
   providedIn: 'root'
 })
 export class BoardService {
-  //app can be extended with different boards, now a standard board with ID 1 is used, if this does not exist one is created
   constructor(private http: HttpClient) { }
 
   checkAndCreateBoard(boardId: number, title: string, description: string): Observable<any> {

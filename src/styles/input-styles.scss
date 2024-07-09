@@ -28,7 +28,12 @@
   justify-content: center;
 }
 
-.input-icon img {}
+.input-icon img {
+  margin-left: 85px;
+  border: 1px solid black;
+  border-radius: 8px;
+  padding: 10px;
+}
 
 .required-text {
   margin-left: 8px;
