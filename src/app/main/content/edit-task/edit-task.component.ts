@@ -15,7 +15,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './edit-task.component.html',
-  styleUrl: './edit-task.component.scss'
+  styleUrls: ['./edit-task.component.scss']
 })
 export class EditTaskComponent implements OnInit, OnDestroy {
   title: string = '';
@@ -24,7 +24,6 @@ export class EditTaskComponent implements OnInit, OnDestroy {
   priority: string = '';
   selectedCategory!: number;
   newSubtaskTitle: string = '';
-  newSubtask: string = '';
   assignedTo: number[] = [];
   minDate!: string;
   newCategoryName: string = '';
@@ -252,11 +251,20 @@ export class EditTaskComponent implements OnInit, OnDestroy {
       const newSubtask: Subtask = {
         id: this.subtasks.length + 1, // Temporäre ID, wird durch Backend ersetzt
         title: this.newSubtaskTitle,
-        completed: false
+        completed: false,
+        isEditing: false
       };
       this.subtasks.push(newSubtask);
       this.newSubtaskTitle = '';
     }
+  }
+
+  editSubtask(subtask: Subtask) {
+    subtask.isEditing = true;
+  }
+
+  saveSubtask(subtask: Subtask) {
+    subtask.isEditing = false;
   }
 
   removeSubtask(subtask: Subtask) {
@@ -273,7 +281,7 @@ export class EditTaskComponent implements OnInit, OnDestroy {
     this.dueDate = '';
     this.priority = '';
     this.selectedCategory = 0;
-    this.newSubtask = '';
+    this.newSubtaskTitle = '';
     this.assignedTo = [];
     this.subtasks = [];
 
@@ -301,6 +309,10 @@ export class EditTaskComponent implements OnInit, OnDestroy {
     this.allUsers.forEach(user => {
       user.selected = this.assignedTo.includes(user.id);
     });
+  }
+
+  trackById(index: number, item: any): number {
+    return item.id;
   }
 
   @HostListener('document:click', ['$event'])
@@ -341,4 +353,3 @@ export class EditTaskComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('main/board/')
   }
 }
-

@@ -5,6 +5,7 @@ export interface Subtask {
   id: number;
   title: string;
   completed: boolean;
+  isEditing?: boolean;
 }
 
 export interface Task {

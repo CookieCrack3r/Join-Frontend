@@ -15,12 +15,11 @@
                     <input type="text" id="title" placeholder="Enter a title" class="input-field" [(ngModel)]="title"
                         name="title" (ngModelChange)="onInputChange('title')" (blur)="onBlur('title')">
                 </div>
-                @if (touchedTitle && !isFieldValid('title')) {
-                <div class="required-container">
+                <div class="required-container" *ngIf="touchedTitle && !isFieldValid('title')">
                     <span class="required-text">Please enter a title!</span>
                 </div>
-                }
             </div>
+
             <div class="input">
                 <label for="description">Description</label>
                 <div class="input-container">
@@ -29,6 +28,7 @@
                         (blur)="onBlur('description')"></textarea>
                 </div>
             </div>
+
             <div class="input">
                 <label for="assignedTo">Assigned to<span class="required-asterisk">*</span></label>
                 <div class="input-container dropdown-header" (click)="toggleDropdown($event)">
@@ -42,22 +42,17 @@
                         </svg>
                     </span>
                     <div class="dropdown-menu" *ngIf="showDropdown" (click)="$event.stopPropagation()">
-                        @for (user of allUsers; track user) {
-                        <div class="checkbox-container">
+                        <div class="checkbox-container" *ngFor="let user of allUsers; trackBy: trackById">
                             <input type="checkbox" [id]="'user_' + user.id" [checked]="assignedTo.includes(user.id)"
                                 [(ngModel)]="user.selected" (change)="onUserChange($event, user.id)">
                             <label [for]="'user_' + user.id">{{user.first_name}} {{user.last_name}}</label>
                         </div>
-                        } @empty {
-                        <div>No users available</div>
-                        }
+                        <div *ngIf="allUsers.length === 0">No users available</div>
                     </div>
                 </div>
-                @if (touchedAssignedTo && !isFieldValid('assignedTo')) {
-                <div class="required-container">
+                <div class="required-container" *ngIf="touchedAssignedTo && !isFieldValid('assignedTo')">
                     <span class="required-text">Please select at least one user!</span>
                 </div>
-                }
             </div>
         </div>
         <div class="vertical-divider"></div>
@@ -69,11 +64,9 @@
                         name="dueDate" (ngModelChange)="onInputChange('dueDate')" (blur)="onBlur('dueDate')"
                         [min]="minDate">
                 </div>
-                @if (touchedDueDate && !isFieldValid('dueDate')) {
-                <div class="required-container">
+                <div class="required-container" *ngIf="touchedDueDate && !isFieldValid('dueDate')">
                     <span class="required-text">Please enter a due date!</span>
                 </div>
-                }
             </div>
             <div class="input">
                 <label>Prio<span class="required-asterisk">*</span></label>
@@ -98,20 +91,15 @@
                     <select id="category" class="input-field" [(ngModel)]="selectedCategory" name="category"
                         (change)="onCategoryChange($event)">
                         <option value="" disabled selected>Select task category</option>
-                        @for (category of categories; track category) {
-                        <option [value]="category.id">{{category.category}}</option>
-                        }
+                        <option *ngFor="let category of categories; trackBy: trackById" [value]="category.id">{{category.category}}</option>
                         <option value="add-new">Add new category</option>
                     </select>
                 </div>
-                @if (touchedCategory && !isFieldValid('category')) {
-                <div class="required-container">
+                <div class="required-container" *ngIf="touchedCategory && !isFieldValid('category')">
                     <span class="required-text">Please select a category!</span>
                 </div>
-                }
             </div>
-            @if (showNewCategoryForm) {
-            <div class="input">
+            <div *ngIf="showNewCategoryForm" class="input">
                 <label for="newCategoryName">New category</label>
                 <div class="input-container">
                     <input type="text" id="newCategoryName" placeholder="New category name" class="input-field"
@@ -121,7 +109,6 @@
                     </span>
                 </div>
             </div>
-            }
             <div class="input">
                 <label for="subtask">Subtasks</label>
                 <div class="input-container">
@@ -132,14 +119,16 @@
                     </span>
                 </div>
                 <ul class="subtask-list">
-                    @for (subtask of subtasks; track subtask.id) {
-                    <li>
-                        {{ subtask.title }}
+                    <li *ngFor="let subtask of subtasks; trackBy: trackById">
+                        <div *ngIf="!subtask.isEditing" (click)="editSubtask(subtask)">
+                            {{ subtask.title }}
+                        </div>
+                        <div *ngIf="subtask.isEditing">
+                            <input type="text" [(ngModel)]="subtask.title" (blur)="saveSubtask(subtask)" (keydown.enter)="saveSubtask(subtask)">
+                        </div>
                         <img src="../../../../assets/img/x.svg" class="remove-subtask" (click)="removeSubtask(subtask)">
                     </li>
-                    } @empty {
-                    <li>No subtasks added</li>
-                    }
+                    <li *ngIf="subtasks.length === 0">No subtasks added</li>
                 </ul>
             </div>
         </div>
