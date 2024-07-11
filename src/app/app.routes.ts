@@ -10,6 +10,7 @@ import { LegalNoticeComponent } from './main/content/legal-notice/legal-notice.c
 import { EditTaskComponent } from './main/content/edit-task/edit-task.component';
 import { CurrentUserResolver } from './resolvers/current-user.resolver';
 import { PrivacyPolicySignupComponent } from './login/privacy-policy-signup/privacy-policy-signup.component';
+import { SignUpDialogComponent } from './login/sign-up-dialog/sign-up-dialog.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -22,6 +23,7 @@ export const routes: Routes = [
       { path: 'addtask', component: AddTaskComponent },
       { path: 'board', component: BoardComponent },
       { path: 'users', component: UsersComponent },
+      { path: 'newusers', component: SignUpDialogComponent },
       { path: 'privacy_policy', component: PrivacyPolicyComponent },
       { path: 'legal_notice', component: LegalNoticeComponent },
       { path: 'edit_task/:id', component: EditTaskComponent },
