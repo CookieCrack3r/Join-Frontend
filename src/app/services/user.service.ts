@@ -32,5 +32,23 @@ export class UserService {
     return this.http.get<User[]>(url)
   }
 
+  /* Delete User
+
+   deleteCurrentUser(updateUser: User): Observable<User> {
+    const url = environment.baseUrl + `/api/current_user/`;
+    return this.http.delete<User>(url)
+  }
+  }
+  
+  */
+
+  /* Delete User
+  
+    updateUser(updateUser: User): Observable<User> {
+    const url = environment.baseUrl + '/api/current_user/';
+    return this.http.put<Task>(url, updatedTask)
+  }
+    
+    */
 
 }
