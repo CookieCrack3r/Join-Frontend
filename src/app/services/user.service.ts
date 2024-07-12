@@ -1,10 +1,9 @@
-import { User } from './../interface/user';
+import { User } from '../interface/user';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.development';
 import { CreateUser } from '../interface/user';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
-
 
 @Injectable({
   providedIn: 'root'
@@ -24,31 +23,29 @@ export class UserService {
 
   getAllUsers(): Observable<User[]> {
     const url = environment.baseUrl + "/api/users/";
-    return this.http.get<User[]>(url)
+    return this.http.get<User[]>(url);
   }
 
   getCurrentUser(): Observable<User[]> {
     const url = environment.baseUrl + "/api/current_user/";
-    return this.http.get<User[]>(url)
+    return this.http.get<User[]>(url);
   }
 
-  /* Delete User
-
-   deleteCurrentUser(updateUser: User): Observable<User> {
-    const url = environment.baseUrl + `/api/current_user/`;
-    return this.http.delete<User>(url)
+  deleteUser(userId: number): Observable<any> {
+    const url = environment.baseUrl + `/api/users/${userId}/`;
+    return this.http.delete(url).pipe(
+      catchError((error: HttpErrorResponse) => {
+        return throwError(() => error);
+      })
+    );
   }
-  }
-  
-  */
 
-  /* Delete User
-  
-    updateUser(updateUser: User): Observable<User> {
-    const url = environment.baseUrl + '/api/current_user/';
-    return this.http.put<Task>(url, updatedTask)
+  updateUser(user: User): Observable<User> {
+    const url = environment.baseUrl + `/api/users/${user.id}/`;
+    return this.http.put<User>(url, user).pipe(
+      catchError((error: HttpErrorResponse) => {
+        return throwError(() => error);
+      })
+    );
   }
-    
-    */
-
 }

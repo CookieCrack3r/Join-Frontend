@@ -4,6 +4,7 @@ export interface CreateUser {
   last_name: string,
   email: string,
   password: string
+
 }
 
 export interface User {
@@ -12,5 +13,7 @@ export interface User {
   first_name: string,
   last_name: string,
   email: string,
-  selected?: boolean
+  selected?: boolean,
+  isEditing?: boolean
+
 }

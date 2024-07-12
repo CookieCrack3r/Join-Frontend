@@ -1,37 +1,41 @@
-<!-- users.component.html -->
 <div class="user-container">
     <div class="user-list">
-        @for (letter of getAlphabet(); track letter) {
-        <div>
-            @if (groupedUsers[letter]) {
-            <div>
-                <h2>{{ letter }}</h2>
-                <ul>
-                    @for (user of groupedUsers[letter]; track user) {
-                    <li (click)="selectUser(user)" [ngClass]="{'active': isSelected(user)}">
-                        <div class="user-border"> {{ getInitials(user) }}</div>
-                        {{ user.first_name }} {{ user.last_name }}
-                    </li>
-                    }
-                </ul>
-            </div>
-            }
+      <div *ngFor="let letter of getAlphabet(); trackBy: trackByLetter">
+        <div *ngIf="groupedUsers[letter]">
+          <h2>{{ letter }}</h2>
+          <ul>
+            <li *ngFor="let user of groupedUsers[letter]; trackBy: trackById" (click)="selectUser(user)" [ngClass]="{'active': isSelected(user)}">
+              <div class="user-border">{{ getInitials(user) }}</div>
+              {{ user.first_name }} {{ user.last_name }}
+            </li>
+          </ul>
         </div>
-        }
+      </div>
     </div>
-
-    <div class="user-details">
-        <div class="details-headline">
+  
+    <div class="user-details" *ngIf="selectedUser">
+      <div class="details-headline"></div>
+      <div class="name-details">
+        <div class="user-border-big">{{ getInitials(selectedUser) }}</div>
+        <span *ngIf="!isEditing" (click)="enableEditing()">{{ selectedUser.first_name }} {{ selectedUser.last_name }}</span>
+        <div *ngIf="isEditing">
+          <input [(ngModel)]="editableUser!.first_name" placeholder="First Name" />
+          <input [(ngModel)]="editableUser!.last_name" placeholder="Last Name" />
         </div>
-        @if (selectedUser) {
-        <div class="name-details">
-            <div class="user-border-big"> {{ getInitials(selectedUser) }}</div>
-            <span>{{ selectedUser.first_name }} {{ selectedUser.last_name }}</span>
-        </div>
-        <p><b>Username:</b></p>
-        <p>{{ selectedUser.username }}</p>
-        <p><b>Email:</b></p>
-        <a [href]="'mailto:' + selectedUser.email">{{ selectedUser.email }}</a>
-        }
+      </div>
+      <p><b>Username:</b></p>
+      <p *ngIf="!isEditing" (click)="enableEditing()">{{ selectedUser.username }}</p>
+      <input *ngIf="isEditing" [(ngModel)]="editableUser!.username" placeholder="Username" />
+      <p><b>Email:</b></p>
+      <a *ngIf="!isEditing" [href]="'mailto:' + selectedUser.email">{{ selectedUser.email }}</a>
+      <input *ngIf="isEditing" [(ngModel)]="editableUser!.email" placeholder="Email" />
+      <div class="actions" *ngIf="isEditing">
+        <button (click)="saveUser()">Save</button>
+        <button (click)="cancelEdit()">Cancel</button>
+      </div>
+      <div class="actions">
+        <button (click)="deleteUser(selectedUser)">Delete</button>
+      </div>
     </div>
-</div>
+  </div>
+  
