@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  baseUrl: 'https://api.join.vks.info'
+  baseUrl: '85.215.196.7'
 };
